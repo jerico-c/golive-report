@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Mengambil elemen-elemen dari HTML
+    const reportForm = document.getElementById('report-form');
     const generateBtn = document.getElementById('generate-btn');
+    const resetBtn = document.getElementById('reset-btn');
     const resultContainer = document.getElementById('result-container');
     const outputText = document.getElementById('output-text');
     const copyBtn = document.getElementById('copy-btn');
@@ -34,13 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 2. Logika untuk menentukan ODC secara otomatis
-        // Contoh: ODP-MGE-FBB/087 -> MGE-FBB
         const odpParts = odpName.split('/');
-        const odpMainPart = odpParts[0].substring(4); // Hilangkan "ODP-"
+        const odpMainPart = odpParts[0].substring(4);
         const catuanOdc = `ODC-${odpMainPart}`;
 
         // 3. Logika untuk menentukan penanggung jawab (PIC)
-        // Contoh: ODP-MGE-FBB/087 -> MGE
         const regionCode = odpMainPart.split('-')[0];
         const pic = picMapping[regionCode] || '@penanggung_jawab_tidak_ditemukan';
 
@@ -64,26 +64,28 @@ ${pic}`;
     // Fungsi untuk tombol "Salin Teks"
     copyBtn.addEventListener('click', () => {
         outputText.select();
-        document.execCommand('copy'); // Metode fallback
-        // Metode modern:
-        // navigator.clipboard.writeText(outputText.value);
+        document.execCommand('copy');
         
         copyBtn.textContent = 'Berhasil Disalin!';
         setTimeout(() => {
             copyBtn.textContent = 'Salin Teks';
-        }, 2000); // Kembalikan teks tombol setelah 2 detik
+        }, 2000);
     });
 
     // Fungsi untuk tombol "Kirim ke Telegram"
     telegramBtn.addEventListener('click', () => {
         const text = outputText.value;
         if (text) {
-            // Encode teks agar aman untuk URL
             const encodedText = encodeURIComponent(text);
-            // Buat URL share Telegram
             const telegramUrl = `https://t.me/share/url?url=&text=${encodedText}`;
-            // Buka di tab baru
             window.open(telegramUrl, '_blank');
         }
+    });
+
+    // Fungsi untuk tombol "Reset Form"
+    resetBtn.addEventListener('click', () => {
+        reportForm.reset();
+        resultContainer.classList.add('hidden');
+        copyBtn.textContent = 'Salin Teks';
     });
 });
