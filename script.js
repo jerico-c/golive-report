@@ -23,13 +23,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fungsi yang dijalankan ketika tombol "Buat Laporan" diklik
     generateBtn.addEventListener('click', () => {
-        const odpName = document.getElementById('odp-name').value.trim();
         const lopName = document.getElementById('lop-name').value.trim();
+        
+        // Membuat Nama ODP secara otomatis dari Nama LOP
+        let odpName = '';
+        const lopParts = lopName.split('-');
+        if (lopParts.length >= 4) {
+            const part3 = lopParts[2];
+            const part4 = lopParts[3];
+            const match = part4.match(/^([A-Z]+)(\d+)$/);
+            if (match) {
+                const textCode = match[1];
+                const number = match[2];
+                odpName = `ODP-${part3}-${textCode}/${number}`;
+            }
+        }
+
+        if (!odpName) {
+            alert('Format Nama LOP tidak sesuai, Nama ODP tidak bisa dibuat otomatis.');
+            return;
+        }
+
         const distribution = document.getElementById('distribution').value.trim();
         const coordinates = document.getElementById('coordinates').value.trim();
         const valinsId = document.getElementById('valins-id').value.trim();
 
-        if (!odpName || !lopName || !distribution || !coordinates || !valinsId) {
+        if (!lopName || !distribution || !coordinates || !valinsId) {
             alert('Harap isi semua field terlebih dahulu!');
             return;
         }
@@ -41,15 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const regionCode = odpMainPart.split('-')[0];
         const pic = picMapping[regionCode] || '@penanggung_jawab_tidak_ditemukan';
 
-        // 4. Menyusun teks laporan sesuai format (dengan format Monospace & Italic)
         const reportText = 
 `\`${odpName}\` ${lopName} DISTRIBUSI ${distribution} CATUAN ${catuanOdc} SUDAH GOLIVE
 
 \`Koordinat ODP :\`
 ${coordinates}
 
-\`ID VALINS :\`
-_${valinsId}_
+\`ID VALINS :\` 
+__${valinsId}__
 
 ${pic}`;
 
