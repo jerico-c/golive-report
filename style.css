@@ -96,3 +96,17 @@ textarea {
 .hidden {
     display: none;
 }
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#reset-btn {
+    background-color: #6c757d;
+}
+
+#reset-btn:hover {
+    background-color: #5a6268;
+}
