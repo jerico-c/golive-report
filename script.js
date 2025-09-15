@@ -8,39 +8,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyBtn = document.getElementById('copy-btn');
     const telegramBtn = document.getElementById('telegram-btn');
     const coordinatesInput = document.getElementById('coordinates');
+    const odpManualContainer = document.getElementById('odp-manual-container');
+    const projectTypeRadios = document.querySelectorAll('input[name="project-type"]');
 
     // Daftar penanggung jawab (PIC) berdasarkan kode wilayah
     const picMapping = {
-        // PIC: @fakhrulfebr
         'TMG': '@fakhrulfebr', 'PRN': '@fakhrulfebr', 'MGE': '@fakhrulfebr', 
         'MTY': '@fakhrulfebr', 'MUN': '@fakhrulfebr', 'SWT': '@fakhrulfebr',
-        // PIC: @uyeekhalo
         'KTA': '@uyeekhalo', 'PWJ': '@uyeekhalo', 'KBM': '@uyeekhalo',
         'KAK': '@uyeekhalo', 'KTW': '@uyeekhalo', 'GOM': '@uyeekhalo',
-        // PIC: @Meylinanan15
         'WOS': '@Meylinanan15'
     };
 
+    // --- LOGIKA BARU UNTUK MENAMPILKAN/SEMBUNYIKAN INPUT ODP ---
+    projectTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'pt2-pt3') {
+                odpManualContainer.classList.remove('hidden');
+            } else {
+                odpManualContainer.classList.add('hidden');
+            }
+        });
+    });
+
     // Fungsi yang dijalankan ketika tombol "Buat Laporan" diklik
     generateBtn.addEventListener('click', () => {
+        const projectType = document.querySelector('input[name="project-type"]:checked').value;
         const lopName = document.getElementById('lop-name').value.trim();
-        
-        // Membuat Nama ODP secara otomatis dari Nama LOP
         let odpName = '';
-        const lopParts = lopName.split('-');
-        if (lopParts.length >= 4) {
-            const part3 = lopParts[2];
-            const part4 = lopParts[3];
-            const match = part4.match(/^([A-Z]+)(\d+)$/);
-            if (match) {
-                const textCode = match[1];
-                const number = match[2];
-                odpName = `ODP-${part3}-${textCode}/${number}`;
+
+        // --- LOGIKA BARU UNTUK MENENTUKAN NAMA ODP ---
+        if (projectType === 'pt2as') {
+            // Logika ODP Otomatis dari Nama LOP
+            const lopParts = lopName.split('-');
+            if (lopParts.length >= 4) {
+                const part3 = lopParts[2];
+                const part4 = lopParts[3];
+                const match = part4.match(/^([A-Z]+)(\d+)$/);
+                if (match) {
+                    const textCode = match[1];
+                    const number = match[2];
+                    odpName = `ODP-${part3}-${textCode}/${number}`;
+                }
             }
+        } else {
+            // Logika ODP Manual dari input pengguna
+            odpName = document.getElementById('odp-name-manual').value.trim();
         }
 
         if (!odpName) {
-            alert('Format Nama LOP tidak sesuai, Nama ODP tidak bisa dibuat otomatis.');
+            alert('Nama ODP tidak bisa ditentukan. Periksa kembali input Nama LOP atau isi Nama ODP manual.');
             return;
         }
 
@@ -78,11 +95,8 @@ ${pic}`;
     copyBtn.addEventListener('click', () => {
         outputText.select();
         document.execCommand('copy');
-        
         copyBtn.textContent = 'Berhasil Disalin!';
-        setTimeout(() => {
-            copyBtn.textContent = 'Salin Teks';
-        }, 2000);
+        setTimeout(() => { copyBtn.textContent = 'Salin Teks'; }, 2000);
     });
 
     telegramBtn.addEventListener('click', () => {
@@ -97,19 +111,18 @@ ${pic}`;
     resetBtn.addEventListener('click', () => {
         reportForm.reset();
         resultContainer.classList.add('hidden');
+        odpManualContainer.classList.add('hidden'); // Sembunyikan lagi saat reset
         copyBtn.textContent = 'Salin Teks';
     });
 
     coordinatesInput.addEventListener('input', (e) => {
         let currentValue = e.target.value;
-
         if (currentValue.includes('\t')) {
             let parts = currentValue.split('\t');
             let lat = parts[0].replace(/,/g, '.');
             let lon = parts[1] ? parts[1].replace(/,/g, '.') : '';
             currentValue = `${lat}, ${lon}`;
         }
-        
         e.target.value = currentValue;
     });
 });
