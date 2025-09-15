@@ -14,8 +14,25 @@
 
         <form id="report-form">
             <div class="form-group">
+                <label>Pilih Jenis Proyek</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="project-type" value="pt2as" checked> PT2AS (ODP Otomatis)
+                    </label>
+                    <label>
+                        <input type="radio" name="project-type" value="pt2-pt3"> PT2/PT3 (ODP Manual)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label for="lop-name">Nama LOP</label>
                 <input type="text" id="lop-name" placeholder="Contoh: PT2AS-25-MGE-FBB087-MERGOAGUNG" required>
+            </div>
+
+            <div class="form-group hidden" id="odp-manual-container">
+                <label for="odp-name-manual">Nama ODP (Manual)</label>
+                <input type="text" id="odp-name-manual" placeholder="Contoh: ODP-MGE-FBB/087">
             </div>
 
             <div class="form-group">
