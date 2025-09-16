@@ -17,10 +17,13 @@
                 <label>Pilih Jenis Proyek</label>
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="project-type" value="pt2as" checked> PT2AS (ODP Otomatis)
+                        <input type="radio" name="project-type" value="pt2as" checked> PT2AS
                     </label>
                     <label>
-                        <input type="radio" name="project-type" value="pt2-pt3"> PT2/PT3 (ODP Manual)
+                        <input type="radio" name="project-type" value="pt2-pt3-single"> PT2/PT3 (1 ODP)
+                    </label>
+                    <label>
+                        <input type="radio" name="project-type" value="pt2-pt3-double"> PT2/PT3 (2 ODP)
                     </label>
                 </div>
             </div>
@@ -30,10 +33,44 @@
                 <input type="text" id="lop-name" placeholder="Contoh: PT2AS-25-MGE-FBB087-MERGOAGUNG" required>
             </div>
 
-            <div class="form-group hidden" id="odp-manual-container">
+            <div class="form-group hidden" id="odp-manual-container-single">
                 <label for="odp-name-manual">Nama ODP (Manual)</label>
                 <input type="text" id="odp-name-manual" placeholder="Contoh: ODP-MGE-FBB/087">
             </div>
+            
+            <div class="hidden" id="odp-manual-container-double">
+                <div class="odp-group">
+                    <h4>Data ODP 1</h4>
+                    <div class="form-group">
+                        <label for="odp-name-1">Nama ODP 1</label>
+                        <input type="text" id="odp-name-1" placeholder="ODP-PWJ-FAB/138">
+                    </div>
+                    <div class="form-group">
+                        <label for="odp-coords-1">Koordinat ODP 1</label>
+                        <input type="text" id="odp-coords-1" placeholder="-7.838804,110.003992">
+                    </div>
+                    <div class="form-group">
+                        <label for="odp-valins-1">ID VALINS 1</label>
+                        <input type="text" id="odp-valins-1" placeholder="31477424">
+                    </div>
+                </div>
+                <div class="odp-group">
+                    <h4>Data ODP 2</h4>
+                    <div class="form-group">
+                        <label for="odp-name-2">Nama ODP 2</label>
+                        <input type="text" id="odp-name-2" placeholder="ODP-PWJ-FAB/139">
+                    </div>
+                    <div class="form-group">
+                        <label for="odp-coords-2">Koordinat ODP 2</label>
+                        <input type="text" id="odp-coords-2" placeholder="-7.839750,110.002840">
+                    </div>
+                    <div class="form-group">
+                        <label for="odp-valins-2">ID VALINS 2</label>
+                        <input type="text" id="odp-valins-2" placeholder="31478434">
+                    </div>
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <label for="distribution">Distribusi</label>
