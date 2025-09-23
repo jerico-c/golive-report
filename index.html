@@ -13,85 +13,61 @@
         <p>Isi form di bawah ini untuk membuat laporan secara otomatis.</p>
 
         <form id="report-form">
-            <div class="form-group">
-                <label>Pilih Jenis Proyek</label>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="project-type" value="pt2as" checked> PT2AS
-                    </label>
-                    <label>
-                        <input type="radio" name="project-type" value="pt2-pt3-single"> PT2/PT3 (1 ODP)
-                    </label>
-                    <label>
-                        <input type="radio" name="project-type" value="pt2-pt3-double"> PT2/PT3 (2 ODP)
-                    </label>
-                </div>
-            </div>
+    <div class="form-group">
+        <label>Pilih Jenis Proyek</label>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="project-type" value="pt2as" checked> PT2AS
+            </label>
+            <label>
+                <input type="radio" name="project-type" value="pt2-pt3-single"> PT2/PT3 (1 ODP)
+            </label>
+            <label>
+                <input type="radio" name="project-type" value="pt2-pt3-multi"> PT2/PT3 (Multi ODP)
+            </label>
+        </div>
+    </div>
 
-            <div class="form-group">
-                <label for="lop-name">Nama LOP</label>
-                <input type="text" id="lop-name" placeholder="Contoh: PT2AS-25-MGE-FBB087-MERGOAGUNG" required>
-            </div>
+    <div class="form-group hidden" id="multi-odp-options">
+        <label for="odp-count">Jumlah ODP</label>
+        <div class="input-with-button">
+            <input type="number" id="odp-count" min="2" value="2" placeholder="Masukkan jumlah...">
+            <button type="button" id="generate-fields-btn">Buat Form</button>
+        </div>
+    </div>
 
-            <div class="form-group hidden" id="odp-manual-container-single">
-                <label for="odp-name-manual">Nama ODP (Manual)</label>
-                <input type="text" id="odp-name-manual" placeholder="Contoh: ODP-MGE-FBB/087">
-            </div>
-            
-            <div class="hidden" id="odp-manual-container-double">
-                <div class="odp-group">
-                    <h4>Data ODP 1</h4>
-                    <div class="form-group">
-                        <label for="odp-name-1">Nama ODP 1</label>
-                        <input type="text" id="odp-name-1" placeholder="ODP-PWJ-FAB/138">
-                    </div>
-                    <div class="form-group">
-                        <label for="odp-coords-1">Koordinat ODP 1</label>
-                        <input type="text" id="odp-coords-1" placeholder="-7.838804,110.003992">
-                    </div>
-                    <div class="form-group">
-                        <label for="odp-valins-1">ID VALINS 1</label>
-                        <input type="text" id="odp-valins-1" placeholder="31477424">
-                    </div>
-                </div>
-                <div class="odp-group">
-                    <h4>Data ODP 2</h4>
-                    <div class="form-group">
-                        <label for="odp-name-2">Nama ODP 2</label>
-                        <input type="text" id="odp-name-2" placeholder="ODP-PWJ-FAB/139">
-                    </div>
-                    <div class="form-group">
-                        <label for="odp-coords-2">Koordinat ODP 2</label>
-                        <input type="text" id="odp-coords-2" placeholder="-7.839750,110.002840">
-                    </div>
-                    <div class="form-group">
-                        <label for="odp-valins-2">ID VALINS 2</label>
-                        <input type="text" id="odp-valins-2" placeholder="31478434">
-                    </div>
-                </div>
-            </div>
+    <div class="form-group">
+        <label for="lop-name">Nama LOP</label>
+        <input type="text" id="lop-name" placeholder="Contoh: PT2AS-25-MGE-FBB087-MERGOAGUNG" required>
+    </div>
 
+    <div class="form-group hidden" id="odp-manual-container-single">
+        <label for="odp-name-manual">Nama ODP (Manual)</label>
+        <input type="text" id="odp-name-manual" placeholder="Contoh: ODP-MGE-FBB/087">
+    </div>
 
-            <div class="form-group">
-                <label for="distribution">Distribusi</label>
-                <input type="text" id="distribution" placeholder="Contoh: 01" required>
-            </div>
+    <div class="hidden" id="odp-multi-container"></div>
 
-            <div class="form-group">
-                <label for="coordinates">Koordinat ODP</label>
-                <input type="text" id="coordinates" placeholder="Contoh: -7.4099, 110.2635" required>
-            </div>
+    <div class="form-group">
+        <label for="distribution">Distribusi</label>
+        <input type="text" id="distribution" placeholder="Contoh: 01" required>
+    </div>
 
-            <div class="form-group">
-                <label for="valins-id">ID VALINS</label>
-                <input type="text" id="valins-id" placeholder="Contoh: 31467007" required>
-            </div>
+    <div class="form-group" id="default-coordinates-container">
+        <label for="coordinates">Koordinat ODP</label>
+        <input type="text" id="coordinates" placeholder="Contoh: -7.4099, 110.2635" required>
+    </div>
 
-            <div class="form-actions">
-                <button type="button" id="reset-btn">Reset Form</button>
-                <button type="button" id="generate-btn">Buat Laporan</button>
-            </div>
-        </form>
+    <div class="form-group" id="default-valins-container">
+        <label for="valins-id">ID VALINS</label>
+        <input type="text" id="valins-id" placeholder="Contoh: 31467007" required>
+    </div>
+
+    <div class="form-actions">
+        <button type="button" id="reset-btn">Reset Form</button>
+        <button type="button" id="generate-btn">Buat Laporan</button>
+    </div>
+</form>
 
         <div id="result-container" class="hidden">
             <h2>Hasil Laporan:</h2>
